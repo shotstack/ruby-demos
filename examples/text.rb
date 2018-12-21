@@ -14,19 +14,19 @@ soundtrack = Shotstack::Soundtrack.new(
   effect: "fadeInOut",
   src: "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/music/disco.mp3")
 
-titleOptions = Shotstack::TitleClipOptions.new(
+title_options = Shotstack::TitleClipOptions.new(
   style: "minimal",
   effect: "zoomIn")
 
-titleClip = Shotstack::TitleClip.new(
+title_clip = Shotstack::TitleClip.new(
     type: "title",
     src: "Hello World",
     in: 0,
     out: 5,
     start: 0,
-    options: titleOptions)
+    options: title_options)
 
-track1 = Shotstack::Track.new(clips: [titleClip])
+track1 = Shotstack::Track.new(clips: [title_clip])
 
 timeline = Shotstack::Timeline.new(
   background: "#000000",
