@@ -1,11 +1,9 @@
 require "shotstack"
 
-configuration = Shotstack::Configuration.new do |config|
-  config.api_key = {"x-api-key" => ENV["SHOTSTACK_KEY"] }
+Shotstack.configure do |config|
+  config.api_key['x-api-key'] = ENV["SHOTSTACK_KEY"]
   config.host = "api.shotstack.io"
   config.base_path = "stage"
-
-  config
 end
 
 images = [
@@ -21,7 +19,7 @@ images = [
   "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/examples/images/pexels/pexels-photo-539432.jpeg"
 ]
 
-api_client = Shotstack::ApiClient.new(configuration)
+api_client = Shotstack::DefaultApi.new
 
 soundtrack = Shotstack::Soundtrack.new(
   effect: "fadeInOut",
@@ -31,17 +29,15 @@ clips = []
 start = 0
 length = 1.5
 
-options = Shotstack::ImageClipOptions.new(
-    effect: "zoomIn")
-
 images.each_with_index do |image, index|
-  clip = Shotstack::ImageClip.new(
-    type: "image",
-    src: image,
-    in: 0,
-    out: length,
+  image_asset = Shotstack::ImageAsset.new(
+      src: image)
+
+  clip = Shotstack::Clip.new(
+    asset: image_asset,
+    length: length,
     start: start,
-    options: options)
+    effect: "zoomIn")
 
   start += length
   clips.push(clip)
@@ -62,10 +58,8 @@ edit = Shotstack::Edit.new(
   timeline: timeline,
   output: output)
 
-render = Shotstack::RenderApi.new(api_client)
-
 begin
-  response = render.post_render(edit).response
+  response = api_client.post_render(edit).response
 rescue => error
   abort("Request failed: #{error.message}")
 end

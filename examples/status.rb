@@ -1,13 +1,11 @@
 require "shotstack"
 
-OUTPUT_URL = "https://s3-ap-southeast-2.amazonaws.com/shotstack-api-stage-output/"
+OUTPUT_URL = "https://s3-ap-southeast-2.amazonaws.com/shotstack-api-dev-output/"
 
-configuration = Shotstack::Configuration.new do |config|
-  config.api_key = {"x-api-key" => ENV["SHOTSTACK_KEY"] }
+Shotstack.configure do |config|
+  config.api_key['x-api-key'] = ENV["SHOTSTACK_KEY"]
   config.host = "api.shotstack.io"
   config.base_path = "stage"
-
-  config
 end
 
 if ARGV[0].nil?
@@ -15,11 +13,10 @@ if ARGV[0].nil?
 end
 
 id = ARGV[0]
-api_client = Shotstack::ApiClient.new(configuration)
-render = Shotstack::RenderApi.new(api_client)
+api_client = Shotstack::DefaultApi.new()
 
 begin
-  response = render.get_render(id).response
+  response = api_client.get_render(id).response
 rescue => error
   abort("Request failed: #{error.message}")
 end
