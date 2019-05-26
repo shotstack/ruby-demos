@@ -1,6 +1,6 @@
 require "shotstack"
 
-OUTPUT_URL = "https://s3-ap-southeast-2.amazonaws.com/shotstack-api-dev-output/"
+OUTPUT_URL = "https://s3-ap-southeast-2.amazonaws.com/shotstack-api-stage-output/"
 
 Shotstack.configure do |config|
   config.api_key['x-api-key'] = ENV["SHOTSTACK_KEY"]
