@@ -1,30 +1,26 @@
 require "shotstack"
 
-configuration = Shotstack::Configuration.new do |config|
-  config.api_key = {"x-api-key" => ENV["SHOTSTACK_KEY"] }
+Shotstack.configure do |config|
+  config.api_key['x-api-key'] = ENV["SHOTSTACK_KEY"]
   config.host = "api.shotstack.io"
   config.base_path = "stage"
-
-  config
 end
 
-api_client = Shotstack::ApiClient.new(configuration)
+api_client = Shotstack::DefaultApi.new
 
 soundtrack = Shotstack::Soundtrack.new(
   effect: "fadeInOut",
   src: "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/music/disco.mp3")
 
-title_options = Shotstack::TitleClipOptions.new(
+title_asset = Shotstack::TitleAsset.new(
   style: "minimal",
-  effect: "zoomIn")
+  text: "Hello World")
 
-title_clip = Shotstack::TitleClip.new(
-    type: "title",
-    src: "Hello World",
-    in: 0,
-    out: 5,
+title_clip = Shotstack::Clip.new(
+    asset: title_asset,
+    length: 5,
     start: 0,
-    options: title_options)
+    effect: "zoomIn")
 
 track1 = Shotstack::Track.new(clips: [title_clip])
 
@@ -41,10 +37,8 @@ edit = Shotstack::Edit.new(
   timeline: timeline,
   output: output)
 
-render = Shotstack::RenderApi.new(api_client)
-
 begin
-  response = render.post_render(edit).response
+  response = api_client.post_render(edit).response
 rescue => error
   abort("Request failed: #{error.message}")
 end

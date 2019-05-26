@@ -1,11 +1,9 @@
 require "shotstack"
 
-configuration = Shotstack::Configuration.new do |config|
-  config.api_key = {"x-api-key" => ENV["SHOTSTACK_KEY"] }
+Shotstack.configure do |config|
+  config.api_key['x-api-key'] = ENV["SHOTSTACK_KEY"]
   config.host = "api.shotstack.io"
   config.base_path = "stage"
-
-  config
 end
 
 styles = [
@@ -16,7 +14,7 @@ styles = [
   "skinny",
 ]
 
-api_client = Shotstack::ApiClient.new(configuration)
+api_client = Shotstack::DefaultApi.new
 
 soundtrack = Shotstack::Soundtrack.new(
   effect: "fadeInOut",
@@ -27,22 +25,21 @@ start = 0
 length = 4
 
 styles.each_with_index do |style, index|
-  options = Shotstack::TitleClipOptions.new(
+  title_asset = Shotstack::TitleAsset.new(
     style: style,
-    effect: "zoomIn")
+    text: style
+    )
 
   transition = Shotstack::Transition.new(
-    in: "wipeRight",
-    out: "wipeRight")
+    _in: "fade",
+    out: "fade")
 
-  clip = Shotstack::TitleClip.new(
-    type: "title",
-    src: style,
-    in: 0,
-    out: length,
+  clip = Shotstack::Clip.new(
+    asset: title_asset,
+    length: length,
     start: start,
     transition: transition,
-    options: options)
+    effect: "zoomIn")
 
   start += length
   clips.push(clip)
@@ -63,10 +60,8 @@ edit = Shotstack::Edit.new(
   timeline: timeline,
   output: output)
 
-render = Shotstack::RenderApi.new(api_client)
-
 begin
-  response = render.post_render(edit).response
+  response = api_client.post_render(edit).response
 rescue => error
   abort("Request failed: #{error.message}")
 end

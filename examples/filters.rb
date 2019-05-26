@@ -1,11 +1,9 @@
 require "shotstack"
 
-configuration = Shotstack::Configuration.new do |config|
-  config.api_key = {"x-api-key" => ENV["SHOTSTACK_KEY"] }
+Shotstack.configure do |config|
+  config.api_key['x-api-key'] = ENV["SHOTSTACK_KEY"]
   config.host = "api.shotstack.io"
   config.base_path = "stage"
-
-  config
 end
 
 filters = [
@@ -19,7 +17,7 @@ filters = [
   "negative"
 ]
 
-api_client = Shotstack::ApiClient.new(configuration)
+api_client = Shotstack::DefaultApi.new
 
 soundtrack = Shotstack::Soundtrack.new(
   effect: "fadeInOut",
@@ -28,51 +26,53 @@ soundtrack = Shotstack::Soundtrack.new(
 video_clips = []
 title_clips = []
 start = 0
-length = 4
-cut_in = 0
-cut_out = length
-
-transition = Shotstack::Transition.new(
-  in: "fade",
-  out: "fade")
+length = 3
+trim = 0
+cut = length
 
 filters.each_with_index do |filter, index|
-  video_options = Shotstack::VideoClipOptions.new
+  # video clips
+  video_asset = Shotstack::VideoAsset.new(
+    src: "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/footage/skater.hd.mp4",
+    trim: trim
+  )
+
+  video_clip = Shotstack::Clip.new(
+    asset: video_asset,
+    start: start,
+    length: length)
 
   if filter != "original"
-    video_options.filter = filter
-  end
+    video_transition = Shotstack::Transition.new(
+      _in: "wipeRight")
 
-  # video clips
-  video_clip = Shotstack::VideoClip.new(
-    type: "video",
-    src: "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/footage/cat.mp4",
-    in: cut_in,
-    out: cut_out,
-    start: start,
-    transition: transition,
-    options: video_options)
+    video_clip.filter = filter
+    video_clip.transition = video_transition
+    video_clip.length = length + 1
+  end
 
   video_clips.push(video_clip)
 
   # title clips
-  title_options = Shotstack::TitleClipOptions.new(
+  title_transition = Shotstack::Transition.new(
+      _in: "fade",
+      out: "fade")
+
+  title_asset = Shotstack::TitleAsset.new(
+    text: filter,
     style: "minimal")
 
-  title_clip = Shotstack::TitleClip.new(
-    type: "title",
-    src: filter,
-    in: 0,
-    out: length,
+  title_clip = Shotstack::Clip.new(
+    asset: title_asset,
+    length: length - (start == 0 ? 1 : 0),
     start: start,
-    transition: transition,
-    options: title_options)
+    transition: title_transition)
 
   title_clips.push(title_clip)
 
-  cut_in += 2
-  cut_out = cut_in + length
-  start += length
+  trim = cut - 1
+  cut = trim + length + 1
+  start = trim
 end
 
 track1 = Shotstack::Track.new(clips: title_clips)
@@ -91,10 +91,8 @@ edit = Shotstack::Edit.new(
   timeline: timeline,
   output: output)
 
-render = Shotstack::RenderApi.new(api_client)
-
 begin
-  response = render.post_render(edit).response
+  response = api_client.post_render(edit).response
 rescue => error
   abort("Request failed: #{error.message}")
 end
