@@ -17,7 +17,7 @@ styles = [
 api_client = Shotstack::DefaultApi.new
 
 soundtrack = Shotstack::Soundtrack.new(
-  effect: "fadeInOut",
+  effect: "fadeInFadeOut",
   src: "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/music/dreams.mp3")
 
 clips = []
