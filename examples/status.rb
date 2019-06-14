@@ -1,7 +1,5 @@
 require "shotstack"
 
-OUTPUT_URL = "https://s3-ap-southeast-2.amazonaws.com/shotstack-api-stage-output/"
-
 Shotstack.configure do |config|
   config.api_key['x-api-key'] = ENV["SHOTSTACK_KEY"]
   config.host = "api.shotstack.io"
@@ -25,7 +23,7 @@ puts "Status: #{response.status.upcase}"
 
 case response.status
 when "done"
-	puts ">> Video URL: #{OUTPUT_URL}#{response.owner}/#{response.id}.mp4"
+	puts ">> Video URL: #{response.url}"
 when "failed"
 	puts ">> Something went wrong, rendering has terminated and will not continue."
 else
