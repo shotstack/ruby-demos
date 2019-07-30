@@ -27,6 +27,7 @@ bundle
 ```bash
 export SHOTSTACK_KEY=your_key_here
 ```
+You can [get an API key](http://shotstack.io/?utm_source=github&utm_medium=demos&utm_campaign=ruby_sdk) via the Shotstack web site.
 
 ## Run an example
 The examples directory includes a number of examples demonstrating the capabilities of the Shotstack API.
