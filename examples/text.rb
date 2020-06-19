@@ -3,10 +3,10 @@ require "shotstack"
 Shotstack.configure do |config|
   config.api_key['x-api-key'] = ENV["SHOTSTACK_KEY"]
   config.host = "api.shotstack.io"
-  config.base_path = "stage"
+  config.base_path = ENV["SHOTSTACK_BASE_PATH"] || "stage"
 end
 
-api_client = Shotstack::DefaultApi.new
+api_client = Shotstack::EndpointsApi.new
 
 soundtrack = Shotstack::Soundtrack.new(
   effect: "fadeInFadeOut",

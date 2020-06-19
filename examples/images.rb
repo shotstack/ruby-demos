@@ -3,7 +3,7 @@ require "shotstack"
 Shotstack.configure do |config|
   config.api_key['x-api-key'] = ENV["SHOTSTACK_KEY"]
   config.host = "api.shotstack.io"
-  config.base_path = "stage"
+  config.base_path = ENV["SHOTSTACK_BASE_PATH"] || "stage"
 end
 
 images = [
@@ -19,7 +19,7 @@ images = [
   "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/examples/images/pexels/pexels-photo-539432.jpeg"
 ]
 
-api_client = Shotstack::DefaultApi.new
+api_client = Shotstack::EndpointsApi.new
 
 soundtrack = Shotstack::Soundtrack.new(
   effect: "fadeInFadeOut",

@@ -3,7 +3,7 @@ require "shotstack"
 Shotstack.configure do |config|
   config.api_key['x-api-key'] = ENV["SHOTSTACK_KEY"]
   config.host = "api.shotstack.io"
-  config.base_path = "stage"
+  config.base_path = ENV["SHOTSTACK_BASE_PATH"] || "stage"
 end
 
 if ARGV[0].nil?
@@ -11,7 +11,7 @@ if ARGV[0].nil?
 end
 
 id = ARGV[0]
-api_client = Shotstack::DefaultApi.new()
+api_client = Shotstack::EndpointsApi.new
 
 begin
   response = api_client.get_render(id).response
