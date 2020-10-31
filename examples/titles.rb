@@ -12,6 +12,11 @@ styles = [
   "vogue",
   "sketchy",
   "skinny",
+  "chunk",
+  "chunkLight",
+  "marker",
+  "future",
+  "subtitle",
 ]
 
 api_client = Shotstack::EndpointsApi.new
