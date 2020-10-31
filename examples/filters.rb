@@ -14,7 +14,8 @@ filters = [
   "darken",
   "lighten",
   "greyscale",
-  "negative"
+  "negative",
+  "blur",
 ]
 
 api_client = Shotstack::EndpointsApi.new
@@ -60,7 +61,8 @@ filters.each_with_index do |filter, index|
 
   title_asset = Shotstack::TitleAsset.new(
     text: filter,
-    style: "minimal")
+    style: "minimal",
+    size: "x-small")
 
   title_clip = Shotstack::Clip.new(
     asset: title_asset,
