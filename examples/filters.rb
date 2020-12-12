@@ -15,7 +15,6 @@ filters = [
   "lighten",
   "greyscale",
   "negative",
-  "blur",
 ]
 
 api_client = Shotstack::EndpointsApi.new
