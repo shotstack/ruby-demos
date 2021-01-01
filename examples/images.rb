@@ -52,7 +52,8 @@ timeline = Shotstack::Timeline.new(
 
 output = Shotstack::Output.new(
   format: "mp4",
-  resolution: "sd")
+  resolution: "sd",
+  fps: 30)
 
 edit = Shotstack::Edit.new(
   timeline: timeline,
