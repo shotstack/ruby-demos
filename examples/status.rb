@@ -23,7 +23,7 @@ puts "Status: #{response.status.upcase}"
 
 case response.status
 when "done"
-	puts ">> Video URL: #{response.url}"
+	puts ">> Asset URL: #{response.url}"
 when "failed"
 	puts ">> Something went wrong, rendering has terminated and will not continue."
 else
