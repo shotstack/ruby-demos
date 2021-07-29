@@ -17,7 +17,7 @@ filters = [
   "negative",
 ]
 
-api_client = Shotstack::EndpointsApi.new
+api_client = Shotstack::EditApi.new
 
 soundtrack = Shotstack::Soundtrack.new(
   effect: "fadeInFadeOut",

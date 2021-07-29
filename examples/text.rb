@@ -6,7 +6,7 @@ Shotstack.configure do |config|
   config.base_path = ENV["SHOTSTACK_BASE_PATH"] || "stage"
 end
 
-api_client = Shotstack::EndpointsApi.new
+api_client = Shotstack::EditApi.new
 
 soundtrack = Shotstack::Soundtrack.new(
   effect: "fadeInFadeOut",

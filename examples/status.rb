@@ -11,7 +11,7 @@ if ARGV[0].nil?
 end
 
 id = ARGV[0]
-api_client = Shotstack::EndpointsApi.new
+api_client = Shotstack::EditApi.new
 
 begin
   response = api_client.get_render(id).response
