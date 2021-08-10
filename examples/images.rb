@@ -19,7 +19,7 @@ images = [
   "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/examples/images/pexels/pexels-photo-539432.jpeg"
 ]
 
-api_client = Shotstack::EndpointsApi.new
+api_client = Shotstack::EditApi.new
 
 soundtrack = Shotstack::Soundtrack.new(
   effect: "fadeInFadeOut",

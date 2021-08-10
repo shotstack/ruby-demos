@@ -6,44 +6,30 @@ Shotstack.configure do |config|
   config.base_path = ENV["SHOTSTACK_BASE_PATH"] || "stage"
 end
 
-styles = [
-  "minimal",
-  "blockbuster",
-  "vogue",
-  "sketchy",
-  "skinny",
-  "chunk",
-  "chunkLight",
-  "marker",
-  "future",
-  "subtitle",
+images = [
+  "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/examples/images/pexels/pexels-photo-712850.jpeg",
+  "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/examples/images/pexels/pexels-photo-867452.jpeg",
+  "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/examples/images/pexels/pexels-photo-752036.jpeg"
 ]
 
 api_client = Shotstack::EditApi.new
 
 soundtrack = Shotstack::Soundtrack.new(
   effect: "fadeInFadeOut",
-  src: "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/music/dreams.mp3")
+  src: "https://s3-ap-southeast-2.amazonaws.com/shotstack-assets/music/gangsta.mp3")
 
 clips = []
 start = 0
-length = 4
+length = 3
 
-styles.each_with_index do |style, index|
-  title_asset = Shotstack::TitleAsset.new(
-    style: style,
-    text: style
-    )
-
-  transition = Shotstack::Transition.new(
-    _in: "fade",
-    out: "fade")
+images.each_with_index do |image, index|
+  image_asset = Shotstack::ImageAsset.new(
+      src: image)
 
   clip = Shotstack::Clip.new(
-    asset: title_asset,
+    asset: image_asset,
     length: length,
     start: start,
-    transition: transition,
     effect: "zoomIn")
 
   start += length
@@ -57,9 +43,13 @@ timeline = Shotstack::Timeline.new(
   soundtrack: soundtrack,
   tracks: [track1])
 
+destination = Shotstack::ShotstackDestination.new(
+  exclude: true)
+
 output = Shotstack::Output.new(
   format: "mp4",
-  resolution: "sd")
+  resolution: "sd",
+  destinations: [destination])
 
 edit = Shotstack::Edit.new(
   timeline: timeline,

@@ -11,7 +11,7 @@ if ARGV[0].nil?
 end
 
 id = ARGV[0]
-api_client = Shotstack::EndpointsApi.new
+api_client = Shotstack::EditApi.new
 
 begin
   response = api_client.get_render(id).response
@@ -23,7 +23,7 @@ puts "Status: #{response.status.upcase}"
 
 case response.status
 when "done"
-	puts ">> Video URL: #{response.url}"
+	puts ">> Asset URL: #{response.url}"
 when "failed"
 	puts ">> Something went wrong, rendering has terminated and will not continue."
 else

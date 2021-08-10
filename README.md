@@ -1,21 +1,45 @@
 # Shotstack Ruby Examples
 
-- **text.rb** -
-    Create a HELLO WORLD video title against black background with a zoom in motion effect and soundtrack.
+### Video examples
 
-- **images.rb** -
-    Takes an array of image URLs and creates a video with a soundtrack and simple zoom in effect.
+- **text.rb** - Create a HELLO WORLD video title against black background with a zoom in motion effect and soundtrack.
 
-- **titles.rb** -
-    Create a video to demo titles using the available preset font styles, a soundtrack, zoom in motion effect and wipe right transition.
+- **images.rb** - Takes an array of image URLs and creates a video with a soundtrack and simple zoom in effect.
 
-- **filters.rb** -
-    Applies filters to a video clip, including a title with the name of the filter and a soundtrack.
+- **titles.rb** - Create a video to demo titles using the available preset font styles, a soundtrack, zoom in motion
+    effect and wipe right transition.
 
-- **status.rb** -
-    Shows the status of a render task and the output video URL. Run this after running one of the render examples.
+- **filters.rb** - Applies filters to a video clip, including a title with the name of the filter and a soundtrack.
+
+- **captions.rb** - Parse an SRT transcript file and apply the captions to a video.
+
+- **layers.rb** - Layer a title over a background video using tracks. The title includes a zoom effect and is
+    semi-transparent.
+
+- **luma.rb** - Create animated transition effects using a luma matte and the luma matte asset type.
+
+### Image examples
+
+- **border.rb** - Add a border frame around a background photo.
+
+### Polling example
+
+- **status.rb** - Shows the status of a render task and the output video URL. Run this after running one of the render
+    examples.
+
+### Asset management examples
+
+- **serve-api/renderId.rb** - Fetch all assets associated with a render ID. Includes video or image and thumbnail and
+    poster.
+
+- **serve-api/assetId.rb** - Fetch an individual asset by asset ID.
+
+- **serve-api/destination.rb** - Shows how to exclude a render from being sent to the Shotstack hosting destination.
+
+---
 
 ## Installation
+
 Install the required gems including the [Shotstack SDK](https://rubygems.org/gems/shotstack)
 
 ```bash
@@ -36,13 +60,42 @@ Windows users (Command Prompt):
 set SHOTSTACK_KEY=your_key_here
 ```
 
-You can [get an API key](http://shotstack.io/?utm_source=github&utm_medium=demos&utm_campaign=ruby_sdk) via the Shotstack web site.
+You can [get an API key](http://shotstack.io/?utm_source=github&utm_medium=demos&utm_campaign=ruby_sdk) via the
+Shotstack web site.
 
 ## Run an example
+
 The examples directory includes a number of examples demonstrating the capabilities of the Shotstack API.
 
-To run the images example:
+#### Rendering
+
+To run a rendering/editing example run the examples at the root of the examples folder, e.g. to run the images video
+example:
 
 ```bash
-ruby examples/titles.rb
+ruby examples/images.rb
+```
+
+#### Polling
+
+To check the status of a render, similar to polling run the `status.rb` example with the render ID, e.g.:
+
+```bash
+ruby examples/status.rb 8b844085-779c-4c3a-b52f-d79deca2a960
+```
+
+#### Asset management
+
+To look up assets hosted by Shotstack run the examples in the [examples/serve-api](./examples/serve-api/) directory.
+
+Find assets by render ID:
+```bash
+ruby examples/serve-api/renderId.rb 8b844085-779c-4c3a-b52f-d79deca2a960
+```
+
+or 
+
+Find an asset by asset ID:
+```bash
+ruby examples/serve-api/assetId.rb 3f446298-779c-8c8c-f253-900c1627b776
 ```
