@@ -14,7 +14,7 @@ id = ARGV[0]
 api_client = Shotstack::EditApi.new
 
 begin
-  response = api_client.get_render(id).response
+  response = api_client.get_render(id, { data: false, merged: true }).response
 rescue => error
   abort("Request failed: #{error.message}")
 end
