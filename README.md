@@ -9,6 +9,9 @@
 - **titles.rb** - Create a video to demo titles using the available preset font styles, a soundtrack, zoom in motion
     effect and wipe right transition.
 
+- **trim.rb** -
+    Trim the start and end of a video clip to output a shortened video.
+
 - **filters.rb** - Applies filters to a video clip, including a title with the name of the filter and a soundtrack.
 
 - **captions.rb** - Parse an SRT transcript file and apply the captions to a video.
@@ -18,10 +21,22 @@
 
 - **luma.rb** - Create animated transition effects using a luma matte and the luma matte asset type.
 
+- **merge.rb** -
+    Merge data in to a video using merge fields.
+
+- **transform.rb** -
+    Apply transformations (rotate, skew and flip) to a video clip.
+
 ### Image examples
 
 - **border.rb** - Add a border frame around a background photo.
 
+- **gif.rb** - Create an animated gif that plays once.
+
+### Probe example
+
+- **probe.rb** -
+    Fetch metadata for any media asset on the internet such as width, height, duration, etc...
 ### Polling example
 
 - **status.rb** - Shows the status of a render task and the output video URL. Run this after running one of the render
