@@ -4,7 +4,7 @@ GEM
     ethon (0.15.0)
       ffi (>= 1.15.0)
     ffi (1.15.5)
-    shotstack (0.1.10)
+    shotstack (0.1.11)
       typhoeus (~> 1.0, >= 1.0.1)
     typhoeus (1.4.0)
       ethon (>= 0.9.0)
