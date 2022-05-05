@@ -7,7 +7,7 @@ Shotstack.configure do |config|
 end
 
 if ARGV[0].nil?
-  abort ">> Please provide the URL to a media file to inspect (i.e. php examples/probe.php https://github.com/shotstack/test-media/raw/main/captioning/scott-ko.mp4)"
+  abort ">> Please provide the URL to a media file to inspect (i.e. ruby examples/probe.rb https://github.com/shotstack/test-media/raw/main/captioning/scott-ko.mp4)"
 end
 
 url = ARGV[0]
